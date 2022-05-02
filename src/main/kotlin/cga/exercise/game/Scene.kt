@@ -33,23 +33,133 @@ class Scene(private val window: GameWindow) {
 
         val attrib = arrayOf<VertexAttribute>(pos, col)
 
-        val vertices = floatArrayOf(
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+        /**
+        //House
+        val houseVertices = floatArrayOf(
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f
+        )
+
+        val houseIndices = intArrayOf(
+        0, 1, 2,
+        0, 2, 4,
+        4, 2, 3
+        )
+        val house = Mesh(houseVertices, houseIndices, attrib)
+        meshList.add(house)
+         */
+
+        //DBP
+        //D
+        val dVertices = floatArrayOf(
+            -1.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.625f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, -0.25f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, 0.25f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.625f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -1.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.875f, -0.375f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.75f, -0.375f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.625f, -0.25f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.625f, 0.25f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.75f, 0.375f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.875f, 0.375f, 0.0f, 1.0f, 0.0f, 0.0f
+        )
+        val dIndices = intArrayOf(
+            0, 1, 6,
+            1, 7, 6,
+            1, 8, 7,
+            1, 2, 8,
+            2, 9, 8,
+            2, 3, 9,
+            3, 10, 9,
+            3, 4, 10,
+            4, 11, 10,
+            4, 5, 11,
+            5, 6, 11,
+            5, 0, 6
+        )
+        val dMesh = Mesh(dVertices, dIndices, attrib)
+        meshList.add(dMesh)
+
+        //B
+        val bVertices = floatArrayOf(
+            -0.25f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.125f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.25f, -0.25f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.125f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.25f, 0.25f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.125f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.25f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.125f, -0.375f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, -0.375f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.125f, -0.25f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, -0.125f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.125f, -0.125f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.125f, 0.125f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.125f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.125f, 0.25f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.375f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.125f, 0.375f, 0.0f, 0.0f, 1.0f, 0.0f
+        )
+        val bIndices = intArrayOf(
+            0, 1, 7,
+            1, 8, 7,
+            1, 2, 8,
+            2, 9, 8,
+            2, 3, 9,
+            3, 10, 9,
+            3, 11, 10,
+            3, 12, 11,
+            3, 13, 12,
+            3, 4, 13,
+            4, 14, 13,
+            4, 5, 14,
+            5, 15, 14,
+            5, 6, 15,
+            6, 16, 15,
+            6, 0, 7,
+            6, 7, 11,
+            6, 11, 12,
+            6, 12, 16
+        )
+        val bMesh = Mesh(bVertices, bIndices, attrib)
+        meshList.add(bMesh)
+
+        //P
+        val pVertices = floatArrayOf(
             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f
+            0.675f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.675f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.875f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            1.0f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.875f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.675f, 0.125f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.75f, 0.125f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.875f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.75f, 0.375f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.675f, 0.375f, 0.0f, 0.0f, 0.0f, 1.0f
         )
-
-        val indices = intArrayOf(
+        val pIndices = intArrayOf(
             0, 1, 2,
-            0, 2, 4,
-            4, 2, 3
+            2, 3, 7,
+            3, 8, 7,
+            3, 4, 8,
+            4, 9, 8,
+            4, 5, 9,
+            5, 10, 9,
+            5, 6, 10,
+            6, 11, 10,
+            6, 0, 2,
+            6, 2, 7,
+            6, 7, 11
         )
-
-        val mesh = Mesh(vertices, indices, attrib)
-
-        meshList.add(mesh)
+        val pMesh = Mesh(pVertices, pIndices, attrib)
+        meshList.add(pMesh)
     }
 
     fun render(dt: Float, t: Float) {
