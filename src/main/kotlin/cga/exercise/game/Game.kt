@@ -5,15 +5,18 @@ import cga.framework.GameWindow
 /*
   Created by Fabian on 16.09.2017.
  */
-class Game(width: Int,
-           height: Int,
-           fullscreen: Boolean = false,
-           vsync: Boolean = false,
-           title: String = "Testgame",
-           GLVersionMajor: Int = 3,
-           GLVersionMinor: Int = 3) : GameWindow(width, height, fullscreen, vsync, GLVersionMajor, GLVersionMinor, title, 4, 120.0f) {
+class Game(
+    width: Int,
+    height: Int,
+    fullscreen: Boolean = false,
+    vsync: Boolean = false,
+    title: String = "Testgame",
+    GLVersionMajor: Int = 3,
+    GLVersionMinor: Int = 3
+) : GameWindow(width, height, fullscreen, vsync, GLVersionMajor, GLVersionMinor, title, 4, 120.0f) {
 
     private val scene: Scene
+
     init {
         setCursorVisible(false)
         scene = Scene(this)
