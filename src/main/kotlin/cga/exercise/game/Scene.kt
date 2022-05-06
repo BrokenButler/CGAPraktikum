@@ -5,6 +5,7 @@ import cga.exercise.components.geometry.VertexAttribute
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
+import cga.framework.OBJLoader
 import org.lwjgl.opengl.GL30
 
 
@@ -51,7 +52,7 @@ class Scene(private val window: GameWindow) {
         val house = Mesh(houseVertices, houseIndices, attrib)
         meshList.add(house)
          */
-
+/*
         //DBP
         //D
         val dVertices = floatArrayOf(
@@ -159,7 +160,21 @@ class Scene(private val window: GameWindow) {
             6, 7, 11
         )
         val pMesh = Mesh(pVertices, pIndices, attrib)
-        meshList.add(pMesh)
+        meshList.add(pMesh)*/
+
+        //1.3
+        val res = OBJLoader.loadOBJ("assets/models/sphere.obj")
+        val objMesh = res.objects[0].meshes[0]
+
+        val stride = 8 * 4
+        val attrPos = VertexAttribute(0, 3, GL30.GL_FLOAT, false, stride, 0)
+        val attrTC = VertexAttribute(1, 2, GL30.GL_FLOAT, false, stride, 3 * 4)
+        val attrNorm = VertexAttribute(2, 3, GL30.GL_FLOAT, false, stride, 5 * 4)
+
+        val vertexAttributes = arrayOf<VertexAttribute>(attrPos, attrTC, attrNorm)
+        val mesh = Mesh(objMesh.vertexData, objMesh.indexData, vertexAttributes)
+
+        meshList.add(mesh)
     }
 
     fun render(dt: Float, t: Float) {
