@@ -1,6 +1,6 @@
 package cga.exercise.components.geometry
 
-import org.lwjgl.opengl.GL30
+import org.lwjgl.opengl.GL30C
 
 /**
  * Creates a Mesh object from vertexdata, intexdata and a given set of vertex attributes
@@ -21,42 +21,42 @@ class Mesh(vertexdata: FloatArray, indexdata: IntArray, attributes: Array<Vertex
 
     init {
         // Create and Bind VAO
-        vao = GL30.glGenVertexArrays()
-        GL30.glBindVertexArray(vao)
+        vao = GL30C.glGenVertexArrays()
+        GL30C.glBindVertexArray(vao)
 
         // Create and Bind VBO
-        vbo = GL30.glGenBuffers()
-        GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vbo)
-        GL30.glBufferData(GL30.GL_ARRAY_BUFFER, vertexdata, GL30.GL_STATIC_DRAW)
+        vbo = GL30C.glGenBuffers()
+        GL30C.glBindBuffer(GL30C.GL_ARRAY_BUFFER, vbo)
+        GL30C.glBufferData(GL30C.GL_ARRAY_BUFFER, vertexdata, GL30C.GL_STATIC_DRAW)
 
         // Create and Bind IBO
-        ibo = GL30.glGenBuffers()
-        GL30.glBindBuffer(GL30.GL_ELEMENT_ARRAY_BUFFER, ibo)
-        GL30.glBufferData(GL30.GL_ELEMENT_ARRAY_BUFFER, indexdata, GL30.GL_STATIC_DRAW)
+        ibo = GL30C.glGenBuffers()
+        GL30C.glBindBuffer(GL30C.GL_ELEMENT_ARRAY_BUFFER, ibo)
+        GL30C.glBufferData(GL30C.GL_ELEMENT_ARRAY_BUFFER, indexdata, GL30C.GL_STATIC_DRAW)
 
         for (va in attributes) {
-            GL30.glEnableVertexAttribArray(va.index)
-            GL30.glVertexAttribPointer(va.index, va.n, va.type, va.normalized, va.stride, va.offset)
+            GL30C.glEnableVertexAttribArray(va.index)
+            GL30C.glVertexAttribPointer(va.index, va.n, va.type, va.normalized, va.stride, va.offset)
         }
 
-        GL30.glBindVertexArray(0)
+        GL30C.glBindVertexArray(0)
     }
 
     /**
      * renders the mesh
      */
     fun render() {
-        GL30.glBindVertexArray(vao)
-        GL30.glDrawElements(GL30.GL_TRIANGLES, indexcount, GL30.GL_UNSIGNED_INT, 0)
-        GL30.glBindVertexArray(0) //bind(0) = unbind
+        GL30C.glBindVertexArray(vao)
+        GL30C.glDrawElements(GL30C.GL_TRIANGLES, indexcount, GL30C.GL_UNSIGNED_INT, 0)
+        GL30C.glBindVertexArray(0) //bind(0) = unbind
     }
 
     /**
      * Deletes the previously allocated OpenGL objects for this mesh
      */
     fun cleanup() {
-        if (ibo != 0) GL30.glDeleteBuffers(ibo) //Why was GL15 used here instead of GL30?
-        if (vbo != 0) GL30.glDeleteBuffers(vbo) //Why was GL15 used here instead of GL30?
-        if (vao != 0) GL30.glDeleteVertexArrays(vao)
+        if (ibo != 0) GL30C.glDeleteBuffers(ibo) //Why was GL15 used here instead of GL30?
+        if (vbo != 0) GL30C.glDeleteBuffers(vbo) //Why was GL15 used here instead of GL30?
+        if (vao != 0) GL30C.glDeleteVertexArrays(vao)
     }
 }
