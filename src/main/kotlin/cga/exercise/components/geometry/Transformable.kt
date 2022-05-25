@@ -8,10 +8,8 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * Returns copy of object model matrix
      * @return modelMatrix
      */
-    fun getModelMatrix(): Matrix4f {
-        // TODO implement
-        throw NotImplementedError()
-    }
+    fun getModelMatrix(): Matrix4f = Matrix4f(modelMatrix)
+
 
     /**
      * Returns multiplication of world and object model matrices.
@@ -31,8 +29,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @param roll radiant angle around z-axis ccw
      */
     fun rotate(pitch: Float, yaw: Float, roll: Float) {
-        // TODO implement
-        throw NotImplementedError()
+        modelMatrix.rotateXYZ(pitch, yaw, roll)
     }
 
     /**
@@ -52,8 +49,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @param deltaPos delta positions
      */
     fun translate(deltaPos: Vector3f) {
-        // TODO implement
-        throw NotImplementedError()
+        modelMatrix.translate(deltaPos)
     }
 
     /**
@@ -71,8 +67,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @param scale scale factor (x, y, z)
      */
     fun scale(scale: Vector3f) {
-        // TODO implement
-        throw NotImplementedError()
+        modelMatrix.scale(scale)
     }
 
     /**
