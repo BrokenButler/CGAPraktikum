@@ -67,8 +67,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      */
     fun preTranslate(deltaPos: Vector3f) {
         //eigene Matrix erstellen und damit multiplizieren
-        val tmpMat = Matrix4f().translate(deltaPos)
-        tmpMat.mul(modelMatrix, modelMatrix)
+        Matrix4f().translate(deltaPos).mul(modelMatrix, modelMatrix)
     }
 
     /**

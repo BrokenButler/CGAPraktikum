@@ -8,6 +8,7 @@ import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
 import cga.framework.OBJLoader
+import org.joml.Math
 import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL30C
