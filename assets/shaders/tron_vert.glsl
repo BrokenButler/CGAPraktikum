@@ -22,12 +22,11 @@ out struct VertexData
 void main(){
     mat4 modelView = view_matrix * model_matrix;
     vec4 pos = modelView * vec4(position, 1.0f);
-    vec4 norm = inverse(transpose(modelView)) * vec4(normal, 1.0f);
+    vec4 norm = inverse(transpose(modelView)) * vec4(normal, 0.0f);
 
     gl_Position = projection_matrix * pos;
 
     vertexData.position = pos.xyz;
     vertexData.tx = tx;
     vertexData.normal = norm.xyz;
-
 }

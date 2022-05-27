@@ -86,7 +86,6 @@ class Scene(private val window: GameWindow) {
 
         if (window.getKeyState(GLFW.GLFW_KEY_E))
             sphere.rotate(0.0f, 0.0f, -2 * dt)
-
     }
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
