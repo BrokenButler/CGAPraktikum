@@ -18,8 +18,9 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return world modelMatrix
      */
     fun getWorldModelMatrix(): Matrix4f {
-        // TODO implement
-        throw NotImplementedError()
+        val mm = getModelMatrix()
+        parent?.getWorldModelMatrix()?.mul(modelMatrix, mm)
+        return mm
     }
 
     /**
@@ -40,8 +41,15 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @param altMidpoint rotation center
      */
     fun rotateAroundPoint(pitch: Float, yaw: Float, roll: Float, altMidpoint: Vector3f) {
-        // TODO implement
-        throw NotImplementedError()
+        //eigene Matrix erstellen und damit multiplizieren
+        //1. zum Ursprung verschieben, 2. drehen, 3. zurück verschieben
+        val tmp = Matrix4f()
+
+        tmp.translate(altMidpoint)
+        tmp.rotateXYZ(pitch, yaw, roll)
+        tmp.translate(Vector3f(altMidpoint).negate())
+
+        modelMatrix = tmp.mul(modelMatrix)
     }
 
     /**
@@ -58,8 +66,9 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @param deltaPos delta positions (x, y, z)
      */
     fun preTranslate(deltaPos: Vector3f) {
-        // TODO implement
-        throw NotImplementedError()
+        //eigene Matrix erstellen und damit multiplizieren
+        val tmpMat = Matrix4f().translate(deltaPos)
+        tmpMat.mul(modelMatrix, modelMatrix)
     }
 
     /**
@@ -76,8 +85,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return position
      */
     fun getPosition(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        return Vector3f(modelMatrix.m30(), modelMatrix.m31(), modelMatrix.m32())
     }
 
     /**
@@ -86,8 +94,8 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return position
      */
     fun getWorldPosition(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        val wmm = getWorldModelMatrix()
+        return Vector3f(wmm.m30(), wmm.m31(), wmm.m32())
     }
 
     /**
@@ -96,8 +104,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return x-axis
      */
     fun getXAxis(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        return Vector3f(modelMatrix.m00(), modelMatrix.m01(), modelMatrix.m02()).normalize()
     }
 
     /**
@@ -106,8 +113,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return y-axis
      */
     fun getYAxis(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        return Vector3f(modelMatrix.m10(), modelMatrix.m11(), modelMatrix.m12()).normalize()
     }
 
     /**
@@ -116,8 +122,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return z-axis
      */
     fun getZAxis(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        return Vector3f(modelMatrix.m20(), modelMatrix.m21(), modelMatrix.m22()).normalize()
     }
 
     /**
@@ -126,8 +131,8 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return x-axis
      */
     fun getWorldXAxis(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        val wmm = getWorldModelMatrix()
+        return Vector3f(wmm.m00(), wmm.m01(), wmm.m02()).normalize()
     }
 
     /**
@@ -136,8 +141,8 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return y-axis
      */
     fun getWorldYAxis(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        val wmm = getWorldModelMatrix()
+        return Vector3f(wmm.m10(), wmm.m11(), wmm.m12()).normalize()
     }
 
     /**
@@ -146,7 +151,7 @@ open class Transformable(private var modelMatrix: Matrix4f = Matrix4f(), var par
      * @return z-axis
      */
     fun getWorldZAxis(): Vector3f {
-        // TODO implement
-        throw NotImplementedError()
+        val wmm = getWorldModelMatrix()
+        return Vector3f(wmm.m20(), wmm.m21(), wmm.m22()).normalize()
     }
 }
