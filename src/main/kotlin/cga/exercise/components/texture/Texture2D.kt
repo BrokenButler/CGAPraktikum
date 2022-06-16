@@ -1,6 +1,7 @@
 package cga.exercise.components.texture
 
 import org.lwjgl.BufferUtils
+import org.lwjgl.opengl.EXTTextureFilterAnisotropic
 import org.lwjgl.opengl.GL30C
 import org.lwjgl.stb.STBImage
 import java.nio.ByteBuffer
@@ -45,19 +46,44 @@ class Texture2D(imageData: ByteBuffer, width: Int, height: Int, genMipMaps: Bool
     }
 
     override fun processTexture(imageData: ByteBuffer, width: Int, height: Int, genMipMaps: Boolean) {
-        // todo 3.1
+        texID = GL30C.glGenTextures()
+        GL30C.glBindTexture(GL30C.GL_TEXTURE_2D, texID)
+        GL30C.glTexImage2D(
+            GL30C.GL_TEXTURE_2D,
+            0,
+            GL30C.GL_RGBA8,
+            width,
+            height,
+            0,
+            GL30C.GL_RGBA,
+            GL30C.GL_UNSIGNED_BYTE,
+            imageData
+        )
+        if (genMipMaps) {
+            GL30C.glGenerateMipmap(GL30C.GL_TEXTURE_2D)
+        }
+        unbind()
     }
 
     override fun setTexParams(wrapS: Int, wrapT: Int, minFilter: Int, magFilter: Int) {
-        // todo 3.1
+        GL30C.glBindTexture(GL30C.GL_TEXTURE_2D, texID)
+        GL30C.glTexParameteri(GL30C.GL_TEXTURE_2D, GL30C.GL_TEXTURE_WRAP_S, wrapS)
+        GL30C.glTexParameteri(GL30C.GL_TEXTURE_2D, GL30C.GL_TEXTURE_WRAP_T, wrapT)
+        GL30C.glTexParameteri(GL30C.GL_TEXTURE_2D, GL30C.GL_TEXTURE_MIN_FILTER, minFilter)
+        GL30C.glTexParameteri(GL30C.GL_TEXTURE_2D, GL30C.GL_TEXTURE_MAG_FILTER, magFilter)
+
+        GL30C.glTexParameterf(GL30C.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f)
+
+        unbind()
     }
 
     override fun bind(textureUnit: Int) {
-        // todo 3.1
+        GL30C.glActiveTexture(GL30C.GL_TEXTURE0 + textureUnit)
+        GL30C.glBindTexture(GL30C.GL_TEXTURE_2D, texID)
     }
 
     override fun unbind() {
-        // todo 3.1
+        GL30C.glBindTexture(GL30C.GL_TEXTURE_2D, 0)
     }
 
     override fun cleanup() {

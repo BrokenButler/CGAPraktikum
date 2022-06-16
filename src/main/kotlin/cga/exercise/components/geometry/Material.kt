@@ -13,6 +13,9 @@ class Material(
 ) {
 
     fun bind(shaderProgram: ShaderProgram) {
-        // todo 3.2
+        emit.bind(0)
+
+        shaderProgram.setUniform("emit", 0)
+        shaderProgram.setUniform("tcMultiplier", tcMultiplier)
     }
 }

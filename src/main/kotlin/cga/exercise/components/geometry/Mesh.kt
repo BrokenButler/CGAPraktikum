@@ -1,5 +1,6 @@
 package cga.exercise.components.geometry
 
+import cga.exercise.components.shader.ShaderProgram
 import org.lwjgl.opengl.GL30C
 
 /**
@@ -12,7 +13,12 @@ import org.lwjgl.opengl.GL30C
  *
  * Created by Fabian on 16.09.2017.
  */
-class Mesh(vertexdata: FloatArray, indexdata: IntArray, attributes: Array<VertexAttribute>) {
+class Mesh(
+    vertexdata: FloatArray,
+    indexdata: IntArray,
+    attributes: Array<VertexAttribute>,
+    var material: Material? = null
+) {
     //private data
     private var vao = 0
     private var vbo = 0
@@ -49,6 +55,11 @@ class Mesh(vertexdata: FloatArray, indexdata: IntArray, attributes: Array<Vertex
         GL30C.glBindVertexArray(vao)
         GL30C.glDrawElements(GL30C.GL_TRIANGLES, indexcount, GL30C.GL_UNSIGNED_INT, 0)
         GL30C.glBindVertexArray(0) //bind(0) = unbind
+    }
+
+    fun render(shaderProgram: ShaderProgram) {
+        material?.bind(shaderProgram)
+        render()
     }
 
     /**

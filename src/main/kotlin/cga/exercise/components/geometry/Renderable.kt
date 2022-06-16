@@ -16,7 +16,7 @@ class Renderable(private val meshes: MutableList<Mesh> = mutableListOf()) : IRen
         shaderProgram.use()
         shaderProgram.setUniform("model_matrix", getWorldModelMatrix(), false)
         for (m in meshes) {
-            m.render()
+            m.render(shaderProgram)
         }
     }
 }

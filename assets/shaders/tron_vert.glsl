@@ -10,10 +10,12 @@ uniform mat4 model_matrix;
 uniform mat4 view_matrix;
 uniform mat4 projection_matrix;
 
+uniform vec2 tcMultiplier;
+
 out struct VertexData
 {
     vec3 position;
-    vec2 tx;
+    vec2 texture;
     vec3 normal;
 
 } vertexData;
@@ -22,11 +24,11 @@ out struct VertexData
 void main(){
     mat4 modelView = view_matrix * model_matrix;
     vec4 pos = modelView * vec4(position, 1.0f);
-    vec4 norm = inverse(transpose(modelView)) * vec4(normal, 0.0f);
+    vec4 norm = inverse(transpose(modelView)) * vec4(normal, 1.0f);
 
     gl_Position = projection_matrix * pos;
 
     vertexData.position = pos.xyz;
-    vertexData.tx = tx;
+    vertexData.texture = tx * tcMultiplier;
     vertexData.normal = norm.xyz;
 }
