@@ -1,7 +1,7 @@
 #version 330 core
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec2 tx;
+layout(location = 1) in vec2 texCoor;
 layout(location = 2) in vec3 normal;
 
 //uniforms
@@ -29,6 +29,6 @@ void main(){
     gl_Position = projection_matrix * pos;
 
     vertexData.position = pos.xyz;
-    vertexData.texture = tx * tcMultiplier;
+    vertexData.texture = texCoor * tcMultiplier;
     vertexData.normal = norm.xyz;
 }

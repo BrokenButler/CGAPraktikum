@@ -37,7 +37,7 @@ class Scene(private val window: GameWindow) {
     init {
         //initial opengl state
         GL30C.glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
-        GL30C.glDisable(GL30C.GL_CULL_FACE); GLError.checkThrow()
+        GL30C.glEnable(GL30C.GL_CULL_FACE); GLError.checkThrow()
         GL30C.glFrontFace(GL30C.GL_CCW); GLError.checkThrow()
         GL30C.glCullFace(GL30C.GL_BACK); GLError.checkThrow()
         GL30C.glEnable(GL30C.GL_DEPTH_TEST); GLError.checkThrow()

@@ -2,7 +2,6 @@ package cga.exercise.components.shader
 
 import org.joml.*
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30C
 import java.nio.FloatBuffer
 import java.nio.file.Files
@@ -62,9 +61,9 @@ class ShaderProgram(vertexShaderPath: String, fragmentShaderPath: String) {
 
     fun setUniform(name: String, value: Int): Boolean {
         if (programID == 0) return false
-        val loc = GL20.glGetUniformLocation(programID, name)
+        val loc = GL30C.glGetUniformLocation(programID, name)
         if (loc != -1) {
-            GL20.glUniform1i(loc, value)
+            GL30C.glUniform1i(loc, value)
             return true
         }
         return false
@@ -72,9 +71,9 @@ class ShaderProgram(vertexShaderPath: String, fragmentShaderPath: String) {
 
     fun setUniform(name: String, value: Vector2f): Boolean {
         if (programID == 0) return false
-        val loc = GL20.glGetUniformLocation(programID, name)
+        val loc = GL30C.glGetUniformLocation(programID, name)
         if (loc != -1) {
-            GL20.glUniform2f(loc, value.x, value.y)
+            GL30C.glUniform2f(loc, value.x, value.y)
             return true
         }
         return false

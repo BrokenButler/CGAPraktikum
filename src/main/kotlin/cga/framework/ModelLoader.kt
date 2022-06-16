@@ -209,8 +209,8 @@ object ModelLoader {
                 Mesh(
                     flattenVertexData(model.meshes[i].vertices, rot),
                     flattenIndexData(model.meshes[i].indices),
-                    vertexAttributes//,
-                    //materials[model.meshes[i].materialIndex]
+                    vertexAttributes,
+                    materials[model.meshes[i].materialIndex]
                 )
             )
         }

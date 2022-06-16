@@ -18,4 +18,8 @@ class Material(
         shaderProgram.setUniform("emit", 0)
         shaderProgram.setUniform("tcMultiplier", tcMultiplier)
     }
+
+    fun unbind() {
+        emit.unbind()
+    }
 }

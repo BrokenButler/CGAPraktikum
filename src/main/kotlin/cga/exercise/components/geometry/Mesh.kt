@@ -60,14 +60,15 @@ class Mesh(
     fun render(shaderProgram: ShaderProgram) {
         material?.bind(shaderProgram)
         render()
+        material?.unbind()
     }
 
     /**
      * Deletes the previously allocated OpenGL objects for this mesh
      */
     fun cleanup() {
-        if (ibo != 0) GL30C.glDeleteBuffers(ibo) //Why was GL15 used here instead of GL30?
-        if (vbo != 0) GL30C.glDeleteBuffers(vbo) //Why was GL15 used here instead of GL30?
+        if (ibo != 0) GL30C.glDeleteBuffers(ibo)
+        if (vbo != 0) GL30C.glDeleteBuffers(vbo)
         if (vao != 0) GL30C.glDeleteVertexArrays(vao)
     }
 }

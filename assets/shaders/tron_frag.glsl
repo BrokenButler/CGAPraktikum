@@ -14,7 +14,7 @@ uniform sampler2D emit;
 out vec4 color;
 
 void main(){
-    vec3 normals = normalize(vertexData.normal);
+    //vec3 normals = normalize(vertexData.normal);
 
     vec3 emitCol = texture(emit, vertexData.texture).rgb;
 
