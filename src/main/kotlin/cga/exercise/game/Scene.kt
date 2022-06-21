@@ -58,7 +58,7 @@ class Scene(private val window: GameWindow) {
         groundDiff.setTexParams(GL30C.GL_REPEAT, GL30C.GL_REPEAT, GL30C.GL_LINEAR_MIPMAP_LINEAR, GL30C.GL_LINEAR)
         groundSpec.setTexParams(GL30C.GL_REPEAT, GL30C.GL_REPEAT, GL30C.GL_LINEAR_MIPMAP_LINEAR, GL30C.GL_LINEAR)
 
-        val groundMaterial = Material(groundDiff, groundEmit, groundSpec, 60f, Vector2f(64f, 64f))
+        val groundMaterial = Material(groundDiff, groundEmit, groundSpec, 60f, Vector2f(64f))
 
         //Loading the Ground
         val resGround = OBJLoader.loadOBJ("assets/models/ground.obj")
