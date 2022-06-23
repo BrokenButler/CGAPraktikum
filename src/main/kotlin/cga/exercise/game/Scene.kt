@@ -5,6 +5,8 @@ import cga.exercise.components.geometry.Material
 import cga.exercise.components.geometry.Mesh
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.geometry.VertexAttribute
+import cga.exercise.components.light.PointLight
+import cga.exercise.components.light.SpotLight
 import cga.exercise.components.shader.ShaderProgram
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GLError
@@ -12,6 +14,8 @@ import cga.framework.GameWindow
 import cga.framework.ModelLoader
 import cga.framework.OBJLoader
 import org.joml.Math
+import org.joml.Math.abs
+import org.joml.Math.sin
 import org.joml.Vector2f
 import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
@@ -32,6 +36,24 @@ class Scene(private val window: GameWindow) {
     ) ?: throw IllegalArgumentException("Could not load tronBike :/")
 
     private var camera = TronCamera()
+
+    private var pointLight: PointLight = PointLight(
+        camera.getWorldPosition(),
+        Vector3f(1f)
+    )
+    private var spotLight: SpotLight = SpotLight(Vector3f(0.0f, 1.0f, -2.0f), Vector3f(1.0f))
+    private var corner1 =
+        PointLight(Vector3f(20.0f, 4.0f, 20.0f), Vector3f(1.0f, 0.0f, 1.0f), Vector3f(0.7f, 0.3f, 0.0f))
+    private var corner2 =
+        PointLight(Vector3f(-20.0f, 4.0f, 20.0f), Vector3f(1.0f, 1.0f, 0.0f), Vector3f(0.7f, 0.3f, 0.0f))
+    private var corner3 =
+        PointLight(Vector3f(20.0f, 4.0f, -20.0f), Vector3f(0.0f, 1.0f, 1.0f), Vector3f(0.7f, 0.3f, 0.0f))
+    private var corner4 =
+        PointLight(Vector3f(-20.0f, 4.0f, -20.0f), Vector3f(1.0f, 0.5f, 0.5f), Vector3f(0.7f, 0.3f, 0.0f))
+
+    private var oldMousePosX = -1.0
+    private var oldMousePosY = -1.0
+    private var bool = false
 
     //scene setup
     init {
@@ -68,6 +90,12 @@ class Scene(private val window: GameWindow) {
 
         tronBike.scale(Vector3f(0.8f))
 
+        //Light setup
+        pointLight.translate(Vector3f(0f, 4f, 0f))
+        pointLight.parent = tronBike
+
+        spotLight.rotate(Math.toRadians(-10f), Math.PI.toFloat(), 0f)
+
         //Camera setup
         camera.rotate(Math.toRadians(-35.0).toFloat(), 0.0f, 0.0f)
         camera.translate(Vector3f(0.0f, 0.0f, 4.0f))
@@ -76,9 +104,43 @@ class Scene(private val window: GameWindow) {
 
     fun render(dt: Float, t: Float) {
         GL30C.glClear(GL30C.GL_COLOR_BUFFER_BIT or GL30C.GL_DEPTH_BUFFER_BIT)
+
+        staticShader.setUniform("col", Vector3f(0.4235f, 0.4745f, 0.5804f)) //Paynes Grey
+
         camera.bind(staticShader)
         ground.render(staticShader)
+
+        staticShader.setUniform("col", Vector3f(abs(sin(t / 1)), abs(sin(t / 3)), abs(sin(t / 2))))
         tronBike.render(staticShader)
+
+        pointLight.bind(staticShader, "point")
+        pointLight.lightCol = Vector3f(abs(sin(t / 1)), abs(sin(t / 3)), abs(sin(t / 2)))
+
+        spotLight.bind(staticShader, "spot", camera.getCalculateViewMatrix())
+        //spotLight.lightCol = Vector3f(abs(sin(t / 14)), abs(sin(t / 8)), abs(sin(t / 6)))
+
+        corner1.bind(staticShader, "corner1")
+        corner2.bind(staticShader, "corner2")
+        corner3.bind(staticShader, "corner3")
+        corner4.bind(staticShader, "corner4")
+
+        //PartyLights
+        //corner4.lightCol = Vector3f(abs(sin(t / 20)), abs(sin(t / 2)), abs(sin(t / 3)))
+        //corner3.lightCol = Vector3f(abs(sin(t / 21)), abs(sin(t / 4)), abs(sin(t / 3)))
+        //corner2.lightCol = Vector3f(abs(sin(t /15)), abs(sin(t / 1)), abs(sin(t / 4)))
+        //corner1.lightCol = Vector3f(abs(sin(t / 22)), abs(sin(t / 3)), abs(sin(t / 1)))
+
+        //RaveLights
+        //corner4.lightCol = Vector3f(abs(tan(t / 1)), abs(tan(t / 2)), abs(tan(t / 3)))
+        //corner3.lightCol = Vector3f(abs(tan(t / 1)), abs(tan(t / 2)), abs(tan(t / 3)))
+        //corner2.lightCol = Vector3f(abs(tan(t / 1)), abs(tan(t / 2)), abs(tan(t / 3)))
+        //corner1.lightCol = Vector3f(abs(tan(t / 1)), abs(tan(t / 2)), abs(tan(t / 3)))
+
+        //ChillLight
+        //corner4.lightCol = Vector3f(abs(cos(t / 1)), abs(cos(t / 2)), abs(cos(t / 3)))
+        //corner3.lightCol = Vector3f(abs(cos(t / 1)), abs(cos(t / 2)), abs(cos(t / 3)))
+        //corner2.lightCol = Vector3f(abs(cos(t / 1)), abs(cos(t / 2)), abs(cos(t / 3)))
+        //corner1.lightCol = Vector3f(abs(cos(t / 1)), abs(cos(t / 2)), abs(cos(t / 3)))
     }
 
     fun update(dt: Float, t: Float) {
@@ -111,8 +173,30 @@ class Scene(private val window: GameWindow) {
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
 
-    fun onMouseMove(xpos: Double, ypos: Double) {}
+    fun onMouseMove(xpos: Double, ypos: Double) {
+        val deltaX = xpos - oldMousePosX
+        val deltaY = ypos - oldMousePosY
 
+        oldMousePosX = xpos
+        oldMousePosY = ypos
+
+        if (bool) {
+            camera.rotateAroundPoint(
+                0f,
+                Math.toRadians(deltaX.toFloat() * -0.05f),
+                0f,
+                Vector3f(0f)
+            )
+
+            //camera.rotateAroundPoint(
+            //    Math.toRadians(deltaY.toFloat() * -0.05f),
+            //    0f,
+            //    0f,
+            //    Vector3f(0f)
+            //)
+        }
+        bool = true
+    }
 
     fun cleanup() {}
 }
