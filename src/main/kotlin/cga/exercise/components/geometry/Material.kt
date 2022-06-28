@@ -14,12 +14,19 @@ class Material(
 
     fun bind(shaderProgram: ShaderProgram) {
         emit.bind(0)
+        diff.bind(1)
+        specular.bind(2)
 
         shaderProgram.setUniform("emit", 0)
+        shaderProgram.setUniform("diff", 1)
+        shaderProgram.setUniform("spec", 2)
+        shaderProgram.setUniform("shininess", shininess)
         shaderProgram.setUniform("tcMultiplier", tcMultiplier)
     }
 
     fun unbind() {
         emit.unbind()
+        diff.unbind()
+        specular.unbind()
     }
 }

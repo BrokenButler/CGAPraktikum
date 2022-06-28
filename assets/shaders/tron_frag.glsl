@@ -64,8 +64,6 @@ vec3 diffSpec(vec3 normale, vec3 lightDir, vec3 viewDir, vec3 diff, vec3 spec, f
     float specular = pow(max(dot(normale, halfwayDir), 0.0f), 16.0f);
 
     return diffuse + specular * spec;
-
-    //return diffuse + specular;
 }
 
 float attenuate(float length, vec3 attParam){ //Gamma Correction nachschauen
@@ -85,6 +83,14 @@ vec3 spotLightIntensity(vec3 spotLightColor, float length, vec3 sp, vec3 spDir){
     float cintensity = clamp(intensity, 0.0f, 1.0f);
 
     return spotLightColor * cintensity * attenuate(length, spotLightAttParam);
+}
+
+vec3 gamma(vec3 C_linear){
+    return pow(C_linear, vec3(2.2));
+}
+
+vec3 invgamma(vec3 C_gamma){
+    return pow(C_gamma, vec3(1.0/2.2));
 }
 
 void main(){
@@ -111,8 +117,11 @@ void main(){
     vec3 cp4 = normalize(vertexData.toCornerLight4);
 
     vec3 diffCol = texture(diff, vertexData.texture).rgb;
+    diffCol = invgamma(diffCol);
     vec3 emitCol = texture(emit, vertexData.texture).rgb;
+    emitCol = invgamma(emitCol);
     vec3 specCol = texture(specular, vertexData.texture).rgb;
+    specCol = invgamma(specCol);
 
     vec3 emissive = emitCol * col;
 
@@ -130,5 +139,6 @@ void main(){
     //Corner4
     emissive += diffSpec(normals, cp4, positions, diffCol, specCol, shininess) * pointLightIntensity(corner4LightCol, cpLength4, corner4LightAttParam);
 
+    emissive = gamma(emissive);
     color = vec4(emissive, 1.0);
 }
