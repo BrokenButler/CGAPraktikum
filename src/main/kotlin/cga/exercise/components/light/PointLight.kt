@@ -9,6 +9,11 @@ open class PointLight(
     var lightCol: Vector3f = Vector3f(),
     var attParam: Vector3f = Vector3f(1.0f, 0.5f, 0.1f)
 ) : IPointLight, Transformable() {
+    /*
+    * attParam.x -> flat light attenuation
+    * attParam.y -> light attenuation relation to length
+    * attParam.z -> light attenuation relation to length^2
+     */
 
     init {
         preTranslate(lightPos)

@@ -44,13 +44,13 @@ class Scene(private val window: GameWindow) {
     )
     private var spotLight: SpotLight = SpotLight(Vector3f(0.0f, 1.0f, -2.0f), Vector3f(1.0f))
     private var corner1 =
-        PointLight(Vector3f(20.0f, 3f, 20.0f), Vector3f(1.0f, 0.0f, 1.0f), Vector3f(0.7f, 0.3f, 0.0f))
+        PointLight(Vector3f(20.0f, 4f, 20.0f), Vector3f(1.0f, 0.0f, 1.0f), Vector3f(0.7f, 0.3f, 0.0f))
     private var corner2 =
-        PointLight(Vector3f(-20.0f, 3f, 20.0f), Vector3f(1.0f, 1.0f, 0.0f), Vector3f(0.7f, 0.3f, 0.0f))
+        PointLight(Vector3f(-20.0f, 4f, 20.0f), Vector3f(1.0f, 1.0f, 0.0f), Vector3f(0.7f, 0.3f, 0.0f))
     private var corner3 =
-        PointLight(Vector3f(20.0f, 3f, -20.0f), Vector3f(0.0f, 1.0f, 1.0f), Vector3f(0.7f, 0.3f, 0.0f))
+        PointLight(Vector3f(20.0f, 4f, -20.0f), Vector3f(0.0f, 1.0f, 1.0f), Vector3f(0.7f, 0.3f, 0.0f))
     private var corner4 =
-        PointLight(Vector3f(-20.0f, 3f, -20.0f), Vector3f(1.0f, 0.5f, 0.5f), Vector3f(0.7f, 0.3f, 0.0f))
+        PointLight(Vector3f(-20.0f, 4f, -20.0f), Vector3f(1.0f, 0.5f, 0.5f), Vector3f(0.7f, 0.3f, 0.0f))
 
     private var oldMousePosX = -1.0
     private var oldMousePosY = -1.0

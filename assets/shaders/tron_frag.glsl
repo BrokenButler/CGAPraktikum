@@ -61,12 +61,13 @@ vec3 diffSpec(vec3 normale, vec3 lightDir, vec3 viewDir, vec3 diff, vec3 spec, f
 
     //Blinn-Phong
     vec3 halfwayDir = normalize(lightDir + viewDir);
-    float specular = pow(max(dot(normale, halfwayDir), 0.0f), 16.0f);
+    float specular = pow(max(dot(normale, halfwayDir), 0.0f), shini);
 
     return diffuse + specular * spec;
 }
 
-float attenuate(float length, vec3 attParam){ //Gamma Correction nachschauen
+float attenuate(float length, vec3 attParam){
+    //return 1.0/pow(length, 2);
     return 1.0/(attParam.x + attParam.y * length + attParam.z * pow(length, 2));
 }
 
